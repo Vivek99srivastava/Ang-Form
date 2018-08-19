@@ -1,0 +1,78 @@
+<div class="container">
+    <div class="col-xs-8">
+    <div [hidden]="submitted">
+      <h1>Registration</h1>
+      <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name"
+                 required
+                 [(ngModel)]="model.name" name="name"
+                 #name="ngModel">
+                  <span *ngIf="name.touched && !name.valid" class="text-danger">Name can't be blank</span>
+        </div>
+
+        <div class="form-group">
+          <label for="alterEgo">Manager</label>
+          <input type="text" class="form-control" id="alterEgo"
+                 [(ngModel)]="model.alterEgo" name="alterEgo">
+        </div>
+        <div class="form-group">
+          <label for="">Email</label>
+          <input required placeholder="abc@example.com"
+          pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+          [(ngModel)]="model.email" name="email" id="email" type="email" class="form-control" #email="ngModel">
+           <span *ngIf="email.touched && !email.valid" class="text-danger">Email incorrect format</span>
+        </div>
+        <div class="form-group">
+          <label for="power">Domain</label>
+          <select class="form-control" id="power"
+                  required
+                  [(ngModel)]="model.power" name="power"
+                  #power="ngModel">
+            <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+          </select>
+          <div [hidden]="power.valid || power.pristine" class="alert alert-danger">
+            Power is required
+          </div>
+          <br>
+          <div class="form-group">
+              <label for="">Description</label>
+                <textarea class="form-control" id="desc" cols="30" rows="10" [(ngModel)]="model.desc" name="desc"
+                #desc="ngModel" placeholder="Justify the reason.."></textarea>
+            </div>
+        </div>
+  
+        <button type="submit" class="btn btn-primary" [disabled]="!heroForm.form.valid">Submit</button>&nbsp;
+        <button type="button" class="btn btn-success" (click)="newHero(); heroForm.reset()">New Hero</button>
+      </form>
+    </div>
+  
+    <div [hidden]="!submitted">
+      <h2>Data Recieved</h2>
+    <br>
+      <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Manager</th>
+              <th>Email</th>
+              <th>Domain</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ model.name }}</td>
+              <td>{{ model.alterEgo }}</td>
+              <td>{{ model.email }}</td>
+              <td>{{ model.power }}</td>
+              <td>{{ model.desc }}</td>
+            </tr>
+            </tbody>
+            </table>
+             <br>
+      <button class="btn btn-primary" (click)="submitted=false">Back</button>
+    </div>
+    </div>
+  </div>
